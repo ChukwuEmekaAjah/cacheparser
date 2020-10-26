@@ -4,7 +4,6 @@ import "strings"
 
 //Parse is the top-level function that accepts client commands on the query
 func Parse(command string) bool {
-	println("command is", command)
 	commandParts := strings.Fields(command)
 	commandParsingFunction, commandExists := Commands[strings.ToUpper(commandParts[0])]
 
