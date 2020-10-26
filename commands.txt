@@ -1,0 +1,31 @@
+#Creation commands
+
+SET keyname value - Set a string value to keyname
+SADD keyname value1 value2 value3 - Add one or more items to a set
+SETEX keyname expiry value - Set a value to key with expirty time in seconds
+SETNX keyname value - Set value to key only if key does not exist
+ZADD score member score2 member2 - Add one or more items to a sorted set
+HSET key field value - Set the value to a field for a hash key
+LSET key index value - Set the value at the index of the list with name key
+LPUSH key value1 value2 - Push values into the list key
+MSET key1 value1 key2 value2 - Set multiple keys and their corresponding values at once. 
+HMSET key field1 value1 field2 value2 - Set multiple values to fields in a hash key
+
+#Retrieval commands
+GET key - Retrieve string value stored at the specified key
+HGET key field - Retrieve the value associated with field in the hash key
+HKEYS key - Retrieve all the fields associated with hash key
+LPOP key - Remove and retrieve the first element in list key
+LINDEX key index - Get the item value at the specified index
+GETSET key value - Get old value of key and set it to new value
+HGETALL key - Retrieve all the fields and their corresponding values associated with hash key
+HLEN key - Return the number of fields in a key
+HMGET key field1 field2 field3 - Retrieve the values associated with the fields in that order
+PING - Ping the server to know if we are connected
+HEXISTS key field - Check if field exists in hash key
+LLEN key - Get the length of items in a list
+MGET key1 key2 key3 - Get the values of the keys in that order
+STRLEN key - Get the length of the string value stored in the key
+ZCARD key - Get the number of members (cardinality) in a sorted set
+KEYS pattern - Get all the keys matching the given pattern
+EXISTS key - Checks if a key exists
