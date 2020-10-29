@@ -5,13 +5,14 @@ import "strings"
 //Parse is the top-level function that accepts client commands on the query
 func Parse(command string) bool {
 	commandParts := strings.Fields(command)
-	commandParsingFunction, commandExists := Commands[strings.ToUpper(commandParts[0])]
+	commandKey := commandParts[0]
+	commandParsingFunction, commandExists := Commands[strings.ToUpper(commandKey)]
 
 	if commandExists == false {
 		return false
 	}
 
-	validRequest := commandParsingFunction(commandParts[1:])
+	validRequest := commandParsingFunction(commandKey, commandParts[1:])
 
 	if !validRequest {
 		return false
