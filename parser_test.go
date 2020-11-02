@@ -1,7 +1,6 @@
 package cacheparser
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -13,7 +12,16 @@ func TestParse(t *testing.T) {
 	}
 }
 
-func TestParseFailure(t *testing.T) {
+func TestSetParseWithoutKeyValue(t *testing.T) {
+	command := "set name"
+
+	if Parse(command) {
+		t.Log("Parse should return false for incomplete arguments")
+		t.Fail()
+	}
+}
+
+func TestInvalidParseCommand(t *testing.T) {
 	command := "seter name ajah"
 	if Parse(command) {
 		t.Log("Failed parsing")
@@ -21,11 +29,20 @@ func TestParseFailure(t *testing.T) {
 	}
 }
 
-func ExampleParse() {
-	command2 := "get name"
-	if Parse(command2) {
-		fmt.Printf("Correct parsing")
+func TestGetParse(t *testing.T) {
+	command := "get name"
+
+	if !Parse(command) {
+		t.Log("Failed parsing for GET command")
+		t.Fail()
 	}
-	// Output:
-	// Correct parsing
+}
+
+func TestGetParseWithoutKey(t *testing.T) {
+	command := "get"
+
+	if Parse(command) {
+		t.Log("Incorrect parsing of GET command")
+		t.Fail()
+	}
 }

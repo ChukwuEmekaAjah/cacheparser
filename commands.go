@@ -1,8 +1,24 @@
 package cacheparser
 
+func isValidSetCommand(command string, arguments []string) bool {
+	if len(arguments) < 2 {
+		return false
+	}
+
+	return true
+}
+
+func isValidGetCommand(command string, arguments []string) bool {
+	if len(arguments) < 1 {
+		return false
+	}
+
+	return true
+}
+
 // Commands lists all the functions this cache would support
 var Commands = map[string]func(commandKey string, arguments []string) bool{
-	"SET":     checkInputValidity,
+	"SET":     isValidSetCommand,
 	"SADD":    checkInputValidity,
 	"SETEX":   checkInputValidity,
 	"SETNX":   checkInputValidity,
@@ -12,7 +28,7 @@ var Commands = map[string]func(commandKey string, arguments []string) bool{
 	"LPUSH":   checkInputValidity,
 	"MSET":    checkInputValidity,
 	"HMSET":   checkInputValidity,
-	"GET":     checkInputValidity,
+	"GET":     isValidGetCommand,
 	"HGET":    checkInputValidity,
 	"HKEYS":   checkInputValidity,
 	"LPOP":    checkInputValidity,

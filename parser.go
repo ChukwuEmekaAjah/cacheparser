@@ -12,9 +12,9 @@ func Parse(command string) bool {
 		return false
 	}
 
-	validRequest := commandParsingFunction(commandKey, commandParts[1:])
+	isValidRequest := commandParsingFunction(commandKey, commandParts[1:])
 
-	if !validRequest {
+	if !isValidRequest {
 		return false
 	}
 
