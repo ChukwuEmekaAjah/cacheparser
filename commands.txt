@@ -4,7 +4,7 @@ SET keyname value - Set a string value to keyname
 SADD keyname value1 value2 value3 - Add one or more items to a set
 SETEX keyname expiry value - Set a value to key with expirty time in seconds
 SETNX keyname value - Set value to key only if key does not exist
-ZADD score member score2 member2 - Add one or more items to a sorted set
+ZADD key score member score2 member2 - Add one or more items to a sorted set
 HSET key field value - Set the value to a field for a hash key
 LSET key index value - Set the value at the index of the list with name key
 LPUSH key value1 value2 - Push values into the list key
