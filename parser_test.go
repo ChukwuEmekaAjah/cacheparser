@@ -5,7 +5,7 @@ import (
 )
 
 func TestParse(t *testing.T) {
-	command := "set name ajah"
+	command := "SET name ajah"
 	if !Parse(command) {
 		t.Log("Failed parsing")
 		t.Fail()
