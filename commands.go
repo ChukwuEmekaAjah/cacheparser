@@ -109,7 +109,119 @@ func isValidHMSetCommand(command string, arguments []string) bool {
 		return false
 	}
 
-	return false
+	return true
+}
+
+func isValidHgetCommand(command string, arguments []string) bool {
+	if len(arguments) != 2 {
+		return false
+	}
+	return true
+}
+
+func isValidHkeysCommand(command string, arguments []string) bool {
+	if len(arguments) != 1 {
+		return false
+	}
+	return true
+}
+
+func isValidLpopCommand(command string, arguments []string) bool {
+	if len(arguments) != 1 {
+		return false
+	}
+	return true
+}
+
+func isValidLindexCommand(command string, arguments []string) bool {
+	if len(arguments) != 2 {
+		return false
+	}
+	return true
+}
+
+func isValidGetSetCommand(command string, arguments []string) bool {
+	if len(arguments) != 2 {
+		return false
+	}
+	return true
+}
+
+func isValidHgetAllCommand(command string, arguments []string) bool {
+	if len(arguments) != 1 {
+		return false
+	}
+	return true
+}
+
+func isValidHlenCommand(command string, arguments []string) bool {
+	if len(arguments) != 1 {
+		return false
+	}
+	return true
+}
+
+func isValidHmgetCommand(command string, arguments []string) bool {
+	if len(arguments) < 2 {
+		return false
+	}
+	return true
+}
+
+func isValidPingCommand(command string, arguments []string) bool {
+	if len(arguments) != 0 {
+		return false
+	}
+	return true
+}
+
+func isValidHexistsCommand(command string, arguments []string) bool {
+	if len(arguments) != 2 {
+		return false
+	}
+	return true
+}
+
+func isValidLlenCommand(command string, arguments []string) bool {
+	if len(arguments) != 1 {
+		return false
+	}
+	return true
+}
+
+func isValidMgetCommand(command string, arguments []string) bool {
+	if len(arguments) < 1 {
+		return false
+	}
+	return true
+}
+
+func isValidStrLenCommand(command string, arguments []string) bool {
+	if len(arguments) != 1 {
+		return false
+	}
+	return true
+}
+
+func isValidZcardCommand(command string, arguments []string) bool {
+	if len(arguments) != 1 {
+		return false
+	}
+	return true
+}
+
+func isValidExistsCommand(command string, arguments []string) bool {
+	if len(arguments) != 1 {
+		return false
+	}
+	return true
+}
+
+func isValidKeysCommand(command string, arguments []string) bool {
+	if len(arguments) != 1 {
+		return false
+	}
+	return true
 }
 
 // Commands lists all the functions this cache would support
@@ -125,20 +237,20 @@ var Commands = map[string]func(commandKey string, arguments []string) bool{
 	"MSET":    isValidMsetCommand,
 	"HMSET":   isValidHMSetCommand,
 	"GET":     isValidGetCommand,
-	"HGET":    checkInputValidity,
-	"HKEYS":   checkInputValidity,
-	"LPOP":    checkInputValidity,
-	"LINDEX":  checkInputValidity,
-	"GETSET":  checkInputValidity,
-	"HGETALL": checkInputValidity,
-	"HLEN":    checkInputValidity,
-	"HMGET":   checkInputValidity,
-	"PING":    checkInputValidity,
-	"HEXISTS": checkInputValidity,
-	"EXISTS":  checkInputValidity,
-	"LLEN":    checkInputValidity,
-	"MGET":    checkInputValidity,
-	"STRLEN":  checkInputValidity,
-	"ZCARD":   checkInputValidity,
-	"KEYS":    checkInputValidity,
+	"HGET":    isValidHgetCommand,
+	"HKEYS":   isValidHkeysCommand,
+	"LPOP":    isValidLpopCommand,
+	"LINDEX":  isValidLindexCommand,
+	"GETSET":  isValidGetSetCommand,
+	"HGETALL": isValidHgetAllCommand,
+	"HLEN":    isValidHlenCommand,
+	"HMGET":   isValidHmgetCommand,
+	"PING":    isValidPingCommand,
+	"HEXISTS": isValidHexistsCommand,
+	"EXISTS":  isValidExistsCommand,
+	"LLEN":    isValidLlenCommand,
+	"MGET":    isValidMgetCommand,
+	"STRLEN":  isValidStrLenCommand,
+	"ZCARD":   isValidZcardCommand,
+	"KEYS":    isValidKeysCommand,
 }
