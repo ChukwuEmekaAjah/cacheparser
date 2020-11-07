@@ -18,11 +18,5 @@ func Parse(command string) bool {
 		return false
 	}
 
-	if commandKey == "SET" {
-		ParserFunctions["SET"](commandParts[1:], "single")
-	}
-
-	println("Correct parsing")
-
 	return true
 }
