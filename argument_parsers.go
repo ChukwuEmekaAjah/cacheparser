@@ -7,24 +7,22 @@ import (
 
 // KeyValue represents how we would store values internally
 type KeyValue struct {
-	key       string
-	value     []string
-	valueType string
-	command   string
+	key     string
+	value   []string
+	command string
 }
 
-func parseSetFunction(command string, arguments []string, valueType string) *KeyValue {
+func parseSetFunction(command string, arguments []string, cacheMap map[string]*KeyValue) *KeyValue {
 	keyValueObject := new(KeyValue)
 	keyValueObject.key = arguments[0]
 	keyValueObject.value = arguments[1:]
-	keyValueObject.valueType = valueType
 	keyValueObject.command = command
 
 	return keyValueObject
 }
 
 // ParserFunctions transforms arguments to a Struct
-var ParserFunctions = map[string]func(command string, arguments []string, valueType string) *KeyValue{
+var ParserFunctions = map[string]func(command string, arguments []string, cacheMap map[string]*KeyValue) *KeyValue{
 	"SET":   parseSetFunction,
 	"SADD":  parseSetFunction,
 	"SETEX": parseSetFunction,

@@ -12,7 +12,7 @@ func TestSetCommandParser(t *testing.T) {
 	command := "set name ajah"
 	commandParts := strings.Fields(command)
 
-	parsedValue := ParserFunctions[strings.ToUpper(commandParts[0])](strings.ToUpper(commandParts[0]), commandParts[1:], "single")
+	parsedValue := ParserFunctions[strings.ToUpper(commandParts[0])](strings.ToUpper(commandParts[0]), commandParts[1:], cacheMap)
 
 	cacheMap[commandParts[1]] = parsedValue
 
