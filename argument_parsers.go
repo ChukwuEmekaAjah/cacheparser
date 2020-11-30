@@ -3,6 +3,7 @@ package cacheparser
 import (
 	"errors"
 	"fmt"
+	"strconv"
 )
 
 // KeyValue represents how we would store values internally
@@ -21,18 +22,116 @@ func parseSetFunction(command string, arguments []string, cacheMap map[string]*K
 	return keyValueObject
 }
 
+func parseSaddFunction(command string, arguments []string, cacheMap map[string]*KeyValue) *KeyValue {
+
+	keyValueObject, exists := cacheMap[arguments[0]]
+
+	if exists == false {
+		keyValueObject = new(KeyValue)
+		keyValueObject.key = arguments[0]
+		keyValueObject.value = arguments[1:]
+		keyValueObject.command = command
+
+		return keyValueObject
+	}
+
+	for _, newValue := range arguments[1:] {
+		for _, value := range keyValueObject.value {
+			if value == newValue { // value already in the set
+				continue
+			}
+		}
+		keyValueObject.value = append(keyValueObject.value, newValue)
+	}
+
+	return keyValueObject
+}
+
+func parseZaddFunction(command string, arguments []string, cacheMap map[string]*KeyValue) *KeyValue {
+
+	keyValueObject, exists := cacheMap[arguments[0]]
+
+	if exists == false {
+		keyValueObject = new(KeyValue)
+		keyValueObject.key = arguments[0]
+		keyValueObject.value = arguments[1:]
+		keyValueObject.command = command
+
+		return keyValueObject
+	}
+
+	for i, newValue := range arguments[1:] {
+		for u, value := range keyValueObject.value {
+			if i%2 == 0 && u%2 == 0 && value == newValue { // key-value pair already in the hash
+				keyValueObject.value[u+1] = arguments[i+2]
+				continue
+			}
+		}
+
+		keyValueObject.value = append(keyValueObject.value, arguments[i+1:i+3]...) // add key-value pair to array
+	}
+
+	return keyValueObject
+}
+
+func parseLsetFunction(command string, arguments []string, cacheMap map[string]*KeyValue) *KeyValue {
+
+	keyValueObject, exists := cacheMap[arguments[0]]
+
+	if exists == false {
+		keyValueObject = new(KeyValue)
+		keyValueObject.key = arguments[0]
+		keyValueObject.value = arguments[1:]
+		keyValueObject.command = command
+
+		return keyValueObject
+	}
+
+	index, err := strconv.ParseInt(arguments[1], 10, 64)
+
+	if err != nil {
+		return keyValueObject
+	}
+
+	if index > int64(len(keyValueObject.value)) {
+		keyValueObject.value = append(keyValueObject.value, arguments[2]) // insert value at position index
+	} else {
+		keyValueObject.value[index] = arguments[2]
+	}
+
+	return keyValueObject
+}
+
+func parseLpushFunction(command string, arguments []string, cacheMap map[string]*KeyValue) *KeyValue {
+
+	keyValueObject, exists := cacheMap[arguments[0]]
+
+	if exists == false {
+		keyValueObject = new(KeyValue)
+		keyValueObject.key = arguments[0]
+		keyValueObject.value = arguments[1:]
+		keyValueObject.command = command
+
+		return keyValueObject
+	}
+
+	keyValueObject.value = append(keyValueObject.value, arguments[1:]...)
+
+	return keyValueObject
+}
+
 // ParserFunctions transforms arguments to a Struct
 var ParserFunctions = map[string]func(command string, arguments []string, cacheMap map[string]*KeyValue) *KeyValue{
 	"SET":   parseSetFunction,
-	"SADD":  parseSetFunction,
+	"SADD":  parseSaddFunction,
 	"SETEX": parseSetFunction,
 	"SETNX": parseSetFunction,
-	"ZADD":  parseSetFunction,
+	"ZADD":  parseZaddFunction,
 	"HSET":  parseSetFunction,
-	"LSET":  parseSetFunction,
-	"LPUSH": parseSetFunction,
+	"LSET":  parseLsetFunction,
+	"LPUSH": parseLpushFunction,
 	"MSET":  parseSetFunction,
-	"HMSET": parseSetFunction,
+	"HMSET": parseZaddFunction,
 }
 
 func retrieveGetFunction(commandName string, arguments []string, cacheMap map[string]*KeyValue) (string, error) {
